@@ -85,7 +85,16 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate = null;
     
+    /**
+     * Allowable values are : 
+     * F <-> Female
+     * M <-> Male
+     * U <-> No gender
+     */
+    @NotNull(message = "Gender is required, valid values are : F: female, M: male, U: no gender.")
+//    @Pattern(regexp = "(F|M|U)")
     @Column(name = "gender")
+    //TODO : Create a @Gender annotation in order to validate gender code inputs.
     private Character gender = null;
     
 //    @Column(name = "country_iso_code")
@@ -272,9 +281,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             ", birthDate='" + 
-            ( birthDate==null ? "null" : birthDate )
+            ( birthDate==null ? "null" : birthDate ) + 
+            ", gender='" + gender + '\'' +
 //            ( birthDate==null ? "null" : birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE) )
-            + '\'' +
             "}";
     }
 }
