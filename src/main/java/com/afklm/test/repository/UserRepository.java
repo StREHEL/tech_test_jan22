@@ -32,4 +32,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+    
+    Optional<User> findOneByLoginAndBirthDateBefore(String login, java.util.Date birthDate);
+    
+    Optional<User> findOneByLoginAndBirthDateBefore(String login, Instant birthInstant);
 }

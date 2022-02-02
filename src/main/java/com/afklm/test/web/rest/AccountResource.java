@@ -144,7 +144,9 @@ public class AccountResource {
             userDTO.getEmail(),
             userDTO.getLangKey(),
             userDTO.getImageUrl(),
-            userDTO.getBirthDate()
+            userDTO.getBirthDate(),
+            userDTO.getResidenceCountryCode(),
+            userDTO.getGender()
         );
     }
 

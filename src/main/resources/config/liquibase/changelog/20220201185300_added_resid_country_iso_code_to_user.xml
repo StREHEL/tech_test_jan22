@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="a104284" id="00000000000005">
+    	<comment>Add residence country code to user table (ISO 3166-1 alpha-2 or ISO 3166-1 alpha-3 codes).</comment>
+        <addColumn schemaName = "public" tableName="jhi_user">
+            <column name="resid_country_iso_code" type="java.sql.Types.VARCHAR(3)" defaultValue="ATA">
+				<constraints  nullable="false" />
+			</column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

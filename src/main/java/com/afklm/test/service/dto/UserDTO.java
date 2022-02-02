@@ -15,7 +15,7 @@ public class UserDTO {
     
     private java.lang.Character gender;
     
-    private String countryISO_Code;
+    private String residenceCountryCode;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -26,8 +26,8 @@ public class UserDTO {
         // Customize it here if you need, or not, firstName/lastName/etc
         this.login = user.getLogin();
         this.birthDate = java.sql.Date.valueOf(user.getBirthDate());
+        this.residenceCountryCode = user.getCountryISO_Code();
         this.gender = user.getGender();
-//        this.countryISO_Code = user.getCountryISO_Code();
     }
 
     public Long getId() {
@@ -63,6 +63,14 @@ public class UserDTO {
 		this.gender = gender;
 	}
 
+	public String getResidenceCountryCode() {
+		return residenceCountryCode;
+	}
+
+	public void setResidenceCountryCode(String countryISO_Code) {
+		this.residenceCountryCode = countryISO_Code;
+	}
+
 	// prettier-ignore
     @Override
     public String toString() {
@@ -71,7 +79,7 @@ public class UserDTO {
             ", login='" + login + '\'' +
             ", birthDate='" + birthDate + '\'' +
             ", gender='" + gender + '\'' +
-            ", coutry_ISO='" + countryISO_Code + '\'' +
+            ", coutry_ISO='" + residenceCountryCode + '\'' +
             "}";
     }
 }

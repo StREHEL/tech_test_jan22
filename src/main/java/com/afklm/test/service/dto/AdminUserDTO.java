@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.constraints.*;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * A DTO representing a user, with his authorities.
  */
@@ -52,6 +54,8 @@ public class AdminUserDTO {
     private LocalDate birthDate;
     
     private Character gender;
+    
+    private String residenceCountryCode;
 
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
@@ -73,6 +77,7 @@ public class AdminUserDTO {
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
         this.birthDate = user.getBirthDate();
         this.gender = user.getGender();
+        this.residenceCountryCode = user.getCountryISO_Code();
     }
 
     public Long getId() {
@@ -195,6 +200,24 @@ public class AdminUserDTO {
 		this.gender = gender;
 	}
 
+	public void setGender(String gender) {
+		if ( StringUtils.isBlank(gender) ) {
+			this.gender = 'U';
+		} else if (gender.length()>1) {
+			this.gender = 'U';
+		} else {			
+			this.gender = gender.charAt(0);
+		}
+	}
+	
+	public String getResidenceCountryCode() {
+		return residenceCountryCode;
+	}
+
+	public void setResidenceCountryCode(String residenceCountryCode) {
+		this.residenceCountryCode = residenceCountryCode;
+	}
+
 	// prettier-ignore
     @Override
     public String toString() {
@@ -212,7 +235,8 @@ public class AdminUserDTO {
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
             ", birthDate=" + birthDate +
-            ", gender=" + gender +
+            ", gender='" + gender + '\'' +
+            ", residenceCountryCode='" + residenceCountryCode  + '\'' +
             "}";
     }
 }

@@ -97,8 +97,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     //TODO : Create a @Gender annotation in order to validate gender code inputs.
     private Character gender = null;
     
-//    @Column(name = "country_iso_code")
-//    private String countryISO_Code = null;
+    /**
+     * Country of residence ISO code (2 ou 3 characters)
+     */
+    @NotNull(message = "ISO code for country residence is mandatory.")
+    @Column(name = "resid_country_iso_code")
+    @Pattern(regexp = "^[A-Z] {2,3}$")
+    private String countryISO_Code = null;
 
     @JsonIgnore
     @ManyToMany
@@ -218,14 +223,24 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	public void setGender(Character gender) {
 		this.gender = gender;
 	}
+	
+	public void setGender(String gender) {
+		if ( StringUtils.isBlank(gender) ) {
+			this.gender = 'U';
+		} else if (gender.length()>1) {
+			this.gender = 'U';
+		} else {			
+			this.gender = gender.charAt(0);
+		}
+	}
+	
+	public String getCountryISO_Code() {
+		return countryISO_Code;
+	}
 
-//	public String getCountryISO_Code() {
-//		return countryISO_Code;
-//	}
-//
-//	public void setCountryISO_Code(String countryISO_Code) {
-//		this.countryISO_Code = countryISO_Code;
-//	}
+	public void setCountryISO_Code(String countryISO_Code) {
+		this.countryISO_Code = countryISO_Code;
+	}
 
 	public String getLangKey() {
         return langKey;
@@ -282,7 +297,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activationKey='" + activationKey + '\'' +
             ", birthDate='" + 
             ( birthDate==null ? "null" : birthDate ) + 
-            ", gender='" + gender + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", countryISO_Code='" + countryISO_Code + '\'' +
 //            ( birthDate==null ? "null" : birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE) )
             "}";
     }

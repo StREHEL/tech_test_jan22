@@ -138,6 +138,8 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        newUser.setCountryISO_Code(userDTO.getResidenceCountryCode());
+        newUser.setGender(userDTO.getGender());
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -172,6 +174,13 @@ public class UserService {
         user.setResetDate(Instant.now());
         user.setActivated(true);
         user.setBirthDate(userDTO.getBirthDate());
+        if ( userDTO.getResidenceCountryCode() == null ) {
+        	user.setCountryISO_Code(Constants.DEFAULT_COUNTRY_ISO);
+        	log.warn("CreateUser, empty country code provided replaced by default one (\""+Constants.DEFAULT_COUNTRY_ISO+"\").");
+        } else {
+        	user.setCountryISO_Code(userDTO.getResidenceCountryCode());
+        }
+        user.setGender(userDTO.getGender());
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO
                 .getAuthorities()
@@ -210,6 +219,8 @@ public class UserService {
                     user.setActivated(userDTO.isActivated());
                     user.setLangKey(userDTO.getLangKey());
                     user.setBirthDate(userDTO.getBirthDate());
+                    user.setCountryISO_Code(userDTO.getResidenceCountryCode());
+                    user.setGender(userDTO.getGender());
                     Set<Authority> managedAuthorities = user.getAuthorities();
                     managedAuthorities.clear();
                     userDTO
@@ -245,8 +256,12 @@ public class UserService {
      * @param email     email id of user.
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
+     * 
+     * @param birthDate 	user's date of birth.
+     * @param residenceCounytryCode 	country of residence code of user.
+     * @param gender	gender of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, LocalDate birthDate) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, LocalDate birthDate, String residenceCountryCode, Character gender) {
         SecurityUtils
             .getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
@@ -260,6 +275,9 @@ public class UserService {
                     user.setLangKey(langKey);
                     user.setImageUrl(imageUrl);
                     user.setBirthDate(birthDate);
+                    if ( residenceCountryCode != null )
+                    	user.setCountryISO_Code(residenceCountryCode);
+                    user.setGender(gender);
                     log.debug("Changed Information for User: {}", user);
                 }
             );
