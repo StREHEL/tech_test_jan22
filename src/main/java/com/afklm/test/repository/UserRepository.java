@@ -2,6 +2,7 @@ package com.afklm.test.repository;
 
 import com.afklm.test.domain.User;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -35,5 +36,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     Optional<User> findOneByLoginAndBirthDateBefore(String login, java.util.Date birthDate);
     
-    Optional<User> findOneByLoginAndBirthDateBefore(String login, Instant birthInstant);
+    /*Optional<User> findOneByLoginAndBirthDateBefore(String login, Instant birthInstant);*/
+    
+    Optional<User> findOneByLoginAndBirthDateBefore(String login, LocalDate birthDate);
 }

@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.datetime.standard.DateTimeFormatterFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,9 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 /**
  * REST controller for managing users.
@@ -103,7 +107,13 @@ public class UserResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
-        Instant eightteenYearsAgo = Instant.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);
+        /*Instant eightteenYearsAgo_v0 = Instant.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
+        Instant eightteenYearsAgo = ZonedDateTime.now().minusYears(18L).toInstant();
+        LocalDate eightteenYearsBeforeDate = eightteenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();
+
+        /*DateTimeFormatter isoLocalDateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;*/
+        LocalDate userBirthDate = userDTO.getBirthDate();
+        
 //        /*Instant eightteenYearsBeforeTodayInst = Instant.now().minus(6574, ChronoUnit.DAYS);*/
         /*LocalDate eightteenYearsBeforeTodayLocDate = LocalDate.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
         /*java.util.Date eightteenYearsBeforeTodayDate = Date.from(eightteenYearsBeforeTodayLocDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());*/
@@ -115,7 +125,7 @@ public class UserResource {
             throw new LoginAlreadyUsedException();
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
-        } else if (userRepository.findOneByLoginAndBirthDateBefore( userDTO.getLogin().toLowerCase(), eightteenYearsAgo ).isPresent() == false) {
+        } else if ( userBirthDate.isAfter(eightteenYearsBeforeDate) ) { //Check that user is adult.
         	throw new NotAdultUserException();
         } else {
             User newUser = userService.createUser(userDTO);

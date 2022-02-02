@@ -176,7 +176,7 @@ public class UserService {
         user.setBirthDate(userDTO.getBirthDate());
         if ( userDTO.getResidenceCountryCode() == null ) {
         	user.setCountryISO_Code(Constants.DEFAULT_COUNTRY_ISO);
-        	log.warn("CreateUser, empty country code provided replaced by default one (\""+Constants.DEFAULT_COUNTRY_ISO+"\").");
+        	log.warn("IN UserService / CreateUser method, empty country code provided replaced by default one (\""+Constants.DEFAULT_COUNTRY_ISO+"\").");
         } else {
         	user.setCountryISO_Code(userDTO.getResidenceCountryCode());
         }

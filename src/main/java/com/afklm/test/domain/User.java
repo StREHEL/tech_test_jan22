@@ -102,7 +102,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
      */
     @NotNull(message = "ISO code for country residence is mandatory.")
     @Column(name = "resid_country_iso_code")
-    @Pattern(regexp = "^[A-Z] {2,3}$")
+    @Pattern(regexp = "^[A-Z]{2,3}$", message = "The value of 'countryISO_Code' must be made of 2 or 3 uppercase alphabetic letters.")
     private String countryISO_Code = null;
 
     @JsonIgnore
