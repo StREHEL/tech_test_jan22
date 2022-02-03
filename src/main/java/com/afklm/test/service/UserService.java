@@ -10,8 +10,13 @@ import com.afklm.test.security.AuthoritiesConstants;
 import com.afklm.test.security.SecurityUtils;
 import com.afklm.test.service.dto.AdminUserDTO;
 import com.afklm.test.service.dto.UserDTO;
+import com.afklm.test.web.rest.errors.NoFrenchUserException;
+import com.afklm.test.web.rest.errors.NotAdultUserException;
+
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -156,6 +161,9 @@ public class UserService {
     }
 
     public User createUser(AdminUserDTO userDTO) {
+    	Instant eightteenYearsAgo = ZonedDateTime.now().minusYears(Constants.ADULT_AGE_YEARS).toInstant();
+        LocalDate eightteenYearsBeforeDate = eightteenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();
+        
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
@@ -193,6 +201,13 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        // Business rules : user must be an adult French person.
+        if ( userDTO.getBirthDate()==null || userDTO.getBirthDate().isAfter(eightteenYearsBeforeDate) ) { //Checks that user is adult.
+        	throw new NotAdultUserException();
+        } else if ( userDTO.getResidenceCountryCode()==null || Constants.FRANCE_ISO_CODES.contains(userDTO.getResidenceCountryCode())==false ) { //Checks that user's country of residence is France.
+        	throw new NoFrenchUserException();
+        }
+        
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;

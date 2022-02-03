@@ -109,11 +109,11 @@ public class UserResource {
     public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
         /*Instant eightteenYearsAgo_v0 = Instant.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
-        Instant eightteenYearsAgo = ZonedDateTime.now().minusYears(18L).toInstant();
-        LocalDate eightteenYearsBeforeDate = eightteenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();
+        Instant eightteenYearsAgo = ZonedDateTime.now().minusYears(Constants.ADULT_AGE_YEARS).toInstant();
+        /*LocalDate eightteenYearsBeforeDate = eightteenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();*/
 
         /*DateTimeFormatter isoLocalDateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;*/
-        LocalDate userBirthDate = userDTO.getBirthDate();
+        /*LocalDate userBirthDate = userDTO.getBirthDate();*/
         
 //        /*Instant eightteenYearsBeforeTodayInst = Instant.now().minus(6574, ChronoUnit.DAYS);*/
         /*LocalDate eightteenYearsBeforeTodayLocDate = LocalDate.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
@@ -126,11 +126,11 @@ public class UserResource {
             throw new LoginAlreadyUsedException();
         } else if (userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).isPresent()) {
             throw new EmailAlreadyUsedException();
-        } else if ( userBirthDate.isAfter(eightteenYearsBeforeDate) ) { //Check that user is adult.
-        	throw new NotAdultUserException();
-        } else if ( userDTO.getResidenceCountryCode()==null || Constants.FRANCE_ISO_CODES.contains(userDTO.getResidenceCountryCode())==false ) {
-        	throw new NoFrenchUserException();
-        } else {
+//        } else if ( userBirthDate.isAfter(eightteenYearsBeforeDate) ) { //Check that user is adult.
+//        	throw new NotAdultUserException();
+//        } else if ( userDTO.getResidenceCountryCode()==null || Constants.FRANCE_ISO_CODES.contains(userDTO.getResidenceCountryCode())==false ) {
+//        	throw new NoFrenchUserException();
+        } else { //TODO : Shift those controls to "createUser(userDTO)" service.
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity
