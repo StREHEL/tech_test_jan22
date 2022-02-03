@@ -16,6 +16,8 @@ public class UserDTO {
     private java.lang.Character gender;
     
     private String residenceCountryCode;
+    
+    private String phoneNumber;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -27,6 +29,7 @@ public class UserDTO {
         this.login = user.getLogin();
         this.birthDate = java.sql.Date.valueOf(user.getBirthDate());
         this.residenceCountryCode = user.getCountryISO_Code();
+        this.phoneNumber = user.getPhoneNumber();
         this.gender = user.getGender();
     }
 
@@ -71,6 +74,14 @@ public class UserDTO {
 		this.residenceCountryCode = countryISO_Code;
 	}
 
+	public String getPhoneNumner() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumner(String phoneNumner) {
+		this.phoneNumber = phoneNumner;
+	}
+
 	// prettier-ignore
     @Override
     public String toString() {
@@ -78,8 +89,9 @@ public class UserDTO {
             "id='" + id + '\'' +
             ", login='" + login + '\'' +
             ", birthDate='" + birthDate + '\'' +
-            ", gender='" + gender + '\'' +
             ", coutry_ISO='" + residenceCountryCode + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
+            ", gender='" + gender + '\'' +
             "}";
     }
 }

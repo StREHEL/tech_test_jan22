@@ -57,6 +57,7 @@ public class UserMapper {
             user.setAuthorities(authorities);
             user.setBirthDate(userDTO.getBirthDate());
             user.setCountryISO_Code(userDTO.getResidenceCountryCode());
+            user.setPhoneNumber(userDTO.getPhoneNumber());
             user.setGender(userDTO.getGender());
             return user;
         }

@@ -1,5 +1,8 @@
 package com.afklm.test.config;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Application constants.
  */
@@ -24,6 +27,8 @@ public final class Constants {
     public static final String DEFAULT_COUNTRY_ISO = "ATA";
     
     public static final long ADULT_AGE_YEARS = 18L;
+    
+    public static final List<String> FRANCE_ISO_CODES = Arrays.asList("FR", "FRA");
 
     private Constants() {}
 }

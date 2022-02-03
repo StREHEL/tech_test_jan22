@@ -10,6 +10,7 @@ import com.afklm.test.service.dto.AdminUserDTO;
 import com.afklm.test.web.rest.errors.BadRequestAlertException;
 import com.afklm.test.web.rest.errors.EmailAlreadyUsedException;
 import com.afklm.test.web.rest.errors.LoginAlreadyUsedException;
+import com.afklm.test.web.rest.errors.NoFrenchUserException;
 import com.afklm.test.web.rest.errors.NotAdultUserException;
 
 import java.net.URI;
@@ -127,6 +128,8 @@ public class UserResource {
             throw new EmailAlreadyUsedException();
         } else if ( userBirthDate.isAfter(eightteenYearsBeforeDate) ) { //Check that user is adult.
         	throw new NotAdultUserException();
+        } else if ( userDTO.getResidenceCountryCode()==null || Constants.FRANCE_ISO_CODES.contains(userDTO.getResidenceCountryCode())==false ) {
+        	throw new NoFrenchUserException();
         } else {
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);

@@ -139,6 +139,7 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         newUser.setCountryISO_Code(userDTO.getResidenceCountryCode());
+        newUser.setPhoneNumber(userDTO.getPhoneNumber());
         newUser.setGender(userDTO.getGender());
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -180,6 +181,7 @@ public class UserService {
         } else {
         	user.setCountryISO_Code(userDTO.getResidenceCountryCode());
         }
+        user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setGender(userDTO.getGender());
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO
@@ -220,6 +222,7 @@ public class UserService {
                     user.setLangKey(userDTO.getLangKey());
                     user.setBirthDate(userDTO.getBirthDate());
                     user.setCountryISO_Code(userDTO.getResidenceCountryCode());
+                    user.setPhoneNumber(userDTO.getPhoneNumber());
                     user.setGender(userDTO.getGender());
                     Set<Authority> managedAuthorities = user.getAuthorities();
                     managedAuthorities.clear();
@@ -256,12 +259,12 @@ public class UserService {
      * @param email     email id of user.
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
-     * 
      * @param birthDate 	user's date of birth.
-     * @param residenceCounytryCode 	country of residence code of user.
+     * @param phoneNumber telephone number of user.
      * @param gender	gender of user.
+     * @param residenceCounytryCode 	country of residence code of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, LocalDate birthDate, String residenceCountryCode, Character gender) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, LocalDate birthDate, String residenceCountryCode, String phoneNumber, Character gender) {
         SecurityUtils
             .getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
@@ -277,6 +280,7 @@ public class UserService {
                     user.setBirthDate(birthDate);
                     if ( residenceCountryCode != null )
                     	user.setCountryISO_Code(residenceCountryCode);
+                    user.setPhoneNumber(phoneNumber);
                     user.setGender(gender);
                     log.debug("Changed Information for User: {}", user);
                 }

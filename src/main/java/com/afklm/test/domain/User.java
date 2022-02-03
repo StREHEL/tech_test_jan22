@@ -85,17 +85,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "birth_date")
     private LocalDate birthDate = null;
     
-    /**
-     * Allowable values are : 
-     * F <-> Female
-     * M <-> Male
-     * U <-> No gender
-     */
-    @NotNull(message = "Gender is required, valid values are : F: female, M: male, U: no gender.")
-//    @Pattern(regexp = "(F|M|U)")
-    @Column(name = "gender")
-    //TODO : Create a @Gender annotation in order to validate gender code inputs.
-    private Character gender = null;
     
     /**
      * Country of residence ISO code (2 ou 3 characters)
@@ -105,6 +94,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Pattern(regexp = "^[A-Z]{2,3}$", message = "The value of 'countryISO_Code' must be made of 2 or 3 uppercase alphabetic letters.")
     private String countryISO_Code = null;
 
+    /**
+     * Allowable values are : 
+     * F <-> Female
+     * M <-> Male
+     * U <-> No gender
+     */
+    /*@NotNull(message = "Gender is required, valid values are : F: female, M: male, U: no gender.")*/
+//    @Pattern(regexp = "(F|M|U)")
+    @Column(name = "gender")
+    //TODO : Create a @Gender annotation in order to validate gender code inputs.
+    private Character gender = null;
+
+    @Column(name = "phone_number")
+    @Pattern(regexp = "^(\\+33[1-9]\\.)?(\\d{1,2}\\.){3,4}(\\d{2})$", message = "The value of 'phone number' must be made with digits.")
+    private String phoneNumber = null;
+    
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -216,6 +221,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 		this.birthDate = birthDate;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	public Character getGender() {
 		return gender;
 	}
@@ -300,6 +313,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", lastName='" + lastName + '\'' +
             ", countryISO_Code='" + countryISO_Code + '\'' +
 //            ( birthDate==null ? "null" : birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE) )
+            ", phoneNumber='" + 
+            ( phoneNumber==null ? "null" : phoneNumber ) +
+            ", gender='" + 
+            ( gender==null ? "null" : gender ) +
             "}";
     }
 }

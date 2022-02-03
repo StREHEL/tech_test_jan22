@@ -56,6 +56,8 @@ public class AdminUserDTO {
     private Character gender;
     
     private String residenceCountryCode;
+    
+    private String phoneNumber;
 
     public AdminUserDTO() {
         // Empty constructor needed for Jackson.
@@ -76,8 +78,9 @@ public class AdminUserDTO {
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
         this.birthDate = user.getBirthDate();
-        this.gender = user.getGender();
         this.residenceCountryCode = user.getCountryISO_Code();
+        this.phoneNumber = user.getPhoneNumber();
+        this.gender = user.getGender();
     }
 
     public Long getId() {
@@ -218,6 +221,14 @@ public class AdminUserDTO {
 		this.residenceCountryCode = residenceCountryCode;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 	// prettier-ignore
     @Override
     public String toString() {
@@ -237,6 +248,7 @@ public class AdminUserDTO {
             ", birthDate=" + birthDate +
             ", gender='" + gender + '\'' +
             ", residenceCountryCode='" + residenceCountryCode  + '\'' +
+            ", phoneNumber='" + phoneNumber  + '\'' +
             "}";
     }
 }

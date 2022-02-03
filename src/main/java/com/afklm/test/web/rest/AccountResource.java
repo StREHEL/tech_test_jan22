@@ -146,6 +146,7 @@ public class AccountResource {
             userDTO.getImageUrl(),
             userDTO.getBirthDate(),
             userDTO.getResidenceCountryCode(),
+            userDTO.getPhoneNumber(), 
             userDTO.getGender()
         );
     }

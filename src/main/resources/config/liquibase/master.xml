@@ -21,4 +21,5 @@
     <include file="config/liquibase/changelog/20220128180500_added_birth_date_to_user.xml" relativeToChangelogFile="false"/>
    	<include file="config/liquibase/changelog/20220131172200_added_gender_to_user.xml" relativeToChangelogFile="false"/>
    	<include file="config/liquibase/changelog/20220201185300_added_resid_country_iso_code_to_user.xml" relativeToChangelogFile="false"/>
+   	<include file="config/liquibase/changelog/20220203094700_added_phone_number_to_user.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
