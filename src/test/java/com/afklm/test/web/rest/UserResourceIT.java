@@ -90,12 +90,12 @@ class UserResourceIT {
         User user = new User();
         user.setLogin(DEFAULT_LOGIN + RandomStringUtils.randomAlphabetic(5));
         user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail(RandomStringUtils.randomAlphabetic(5) + DEFAULT_EMAIL);
+//        user.setActivated(true);
+//        user.setEmail(RandomStringUtils.randomAlphabetic(5) + DEFAULT_EMAIL);
         user.setFirstName(DEFAULT_FIRSTNAME);
         user.setLastName(DEFAULT_LASTNAME);
-        user.setImageUrl(DEFAULT_IMAGEURL);
-        user.setLangKey(DEFAULT_LANGKEY);
+//        user.setImageUrl(DEFAULT_IMAGEURL);
+//        user.setLangKey(DEFAULT_LANGKEY);
         user.setBirthDate(DEFAULT_BIRTHDATE);
         user.setCountryISO_Code(DEFAULT_RESIDENCE);
         return user;
@@ -107,7 +107,7 @@ class UserResourceIT {
     public static User initTestUser(UserRepository userRepository, EntityManager em) {
         User user = createEntity(em);
         user.setLogin(DEFAULT_LOGIN);
-        user.setEmail(DEFAULT_EMAIL);
+//        user.setEmail(DEFAULT_EMAIL);
         return user;
     }
 
@@ -152,9 +152,9 @@ class UserResourceIT {
                 assertThat(testUser.getLogin()).isEqualTo(DEFAULT_LOGIN);
                 assertThat(testUser.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
                 assertThat(testUser.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-                assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
-                assertThat(testUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
-                assertThat(testUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+//                assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
+//                assertThat(testUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
+//                assertThat(testUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
                 //TODO Add checks here.
             }
         );
@@ -324,7 +324,7 @@ class UserResourceIT {
         managedUserVM.setFirstName(UPDATED_FIRSTNAME);
         managedUserVM.setLastName(UPDATED_LASTNAME);
         managedUserVM.setEmail(UPDATED_EMAIL);
-        managedUserVM.setActivated(updatedUser.isActivated());
+//        managedUserVM.setActivated(updatedUser.isActivated());
         managedUserVM.setImageUrl(UPDATED_IMAGEURL);
         managedUserVM.setLangKey(UPDATED_LANGKEY);
         managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
@@ -351,9 +351,9 @@ class UserResourceIT {
                 User testUser = users.stream().filter(usr -> usr.getId().equals(updatedUser.getId())).findFirst().get();
                 assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
                 assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
-                assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-                assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
-                assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+//                assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+//                assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
+//                assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
                 //TODO : Add checks here.
             }
         );
@@ -376,7 +376,7 @@ class UserResourceIT {
         managedUserVM.setFirstName(UPDATED_FIRSTNAME);
         managedUserVM.setLastName(UPDATED_LASTNAME);
         managedUserVM.setEmail(UPDATED_EMAIL);
-        managedUserVM.setActivated(updatedUser.isActivated());
+//        managedUserVM.setActivated(updatedUser.isActivated());
         managedUserVM.setImageUrl(UPDATED_IMAGEURL);
         managedUserVM.setLangKey(UPDATED_LANGKEY);
         managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
@@ -404,9 +404,9 @@ class UserResourceIT {
                 assertThat(testUser.getLogin()).isEqualTo(UPDATED_LOGIN);
                 assertThat(testUser.getFirstName()).isEqualTo(UPDATED_FIRSTNAME);
                 assertThat(testUser.getLastName()).isEqualTo(UPDATED_LASTNAME);
-                assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
-                assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
-                assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+//                assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
+//                assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
+//                assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
                 //TODO : Add checks here.
             }
         );
@@ -421,12 +421,12 @@ class UserResourceIT {
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
         anotherUser.setPassword(RandomStringUtils.random(60));
-        anotherUser.setActivated(true);
-        anotherUser.setEmail("jhipster@localhost");
+//        anotherUser.setActivated(true);
+//        anotherUser.setEmail("jhipster@localhost");
         anotherUser.setFirstName("java");
         anotherUser.setLastName("hipster");
-        anotherUser.setImageUrl("");
-        anotherUser.setLangKey("en");
+//        anotherUser.setImageUrl("");
+//        anotherUser.setLangKey("en");
         anotherUser.setBirthDate(DEFAULT_BIRTHDATE);
         anotherUser.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.saveAndFlush(anotherUser);
@@ -441,9 +441,9 @@ class UserResourceIT {
         managedUserVM.setFirstName(updatedUser.getFirstName());
         managedUserVM.setLastName(updatedUser.getLastName());
         managedUserVM.setEmail("jhipster@localhost"); // this email should already be used by anotherUser
-        managedUserVM.setActivated(updatedUser.isActivated());
-        managedUserVM.setImageUrl(updatedUser.getImageUrl());
-        managedUserVM.setLangKey(updatedUser.getLangKey());
+//        managedUserVM.setActivated(updatedUser.isActivated());
+//        managedUserVM.setImageUrl(updatedUser.getImageUrl());
+//        managedUserVM.setLangKey(updatedUser.getLangKey());
         managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
@@ -471,12 +471,12 @@ class UserResourceIT {
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
         anotherUser.setPassword(RandomStringUtils.random(60));
-        anotherUser.setActivated(true);
-        anotherUser.setEmail("jhipster@localhost");
+//        anotherUser.setActivated(true);
+//        anotherUser.setEmail("jhipster@localhost");
         anotherUser.setFirstName("java");
         anotherUser.setLastName("hipster");
-        anotherUser.setImageUrl("");
-        anotherUser.setLangKey("en");
+//        anotherUser.setImageUrl("");
+//        anotherUser.setLangKey("en");
         anotherUser.setBirthDate(DEFAULT_BIRTHDATE);
         anotherUser.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.saveAndFlush(anotherUser);
@@ -490,10 +490,10 @@ class UserResourceIT {
         managedUserVM.setPassword(updatedUser.getPassword());
         managedUserVM.setFirstName(updatedUser.getFirstName());
         managedUserVM.setLastName(updatedUser.getLastName());
-        managedUserVM.setEmail(updatedUser.getEmail());
-        managedUserVM.setActivated(updatedUser.isActivated());
-        managedUserVM.setImageUrl(updatedUser.getImageUrl());
-        managedUserVM.setLangKey(updatedUser.getLangKey());
+//        managedUserVM.setEmail(updatedUser.getEmail());
+//        managedUserVM.setActivated(updatedUser.isActivated());
+//        managedUserVM.setImageUrl(updatedUser.getImageUrl());
+//        managedUserVM.setLangKey(updatedUser.getLangKey());
         managedUserVM.setCreatedBy(updatedUser.getCreatedBy());
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
@@ -564,10 +564,10 @@ class UserResourceIT {
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(user.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(user.getLastName()).isEqualTo(DEFAULT_LASTNAME);
-        assertThat(user.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(user.isActivated()).isTrue();
-        assertThat(user.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
-        assertThat(user.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+//        assertThat(user.getEmail()).isEqualTo(DEFAULT_EMAIL);
+//        assertThat(user.isActivated()).isTrue();
+//        assertThat(user.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
+//        assertThat(user.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
         assertThat(user.getCreatedBy()).isNull();
         assertThat(user.getCreatedDate()).isNotNull();
         assertThat(user.getLastModifiedBy()).isNull();

@@ -52,32 +52,32 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-    @Email
-    @Size(min = 5, max = 254)
-    @Column(length = 254, unique = true)
-    private String email;
+//    @Email
+//    @Size(min = 5, max = 254)
+//    @Column(length = 254, unique = true)
+//    private String email;
 
-    @NotNull
-    @Column(nullable = false)
-    private boolean activated = false;
+//    @NotNull
+//    @Column(nullable = false)
+//    private boolean activated = false;
 
-    @Size(min = 2, max = 10)
-    @Column(name = "lang_key", length = 10)
-    private String langKey;
+//    @Size(min = 2, max = 10)
+//    @Column(name = "lang_key", length = 10)
+//    private String langKey;
 
-    @Size(max = 256)
-    @Column(name = "image_url", length = 256)
-    private String imageUrl;
+//    @Size(max = 256)
+//    @Column(name = "image_url", length = 256)
+//    private String imageUrl;
 
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
-    @JsonIgnore
-    private String activationKey;
+//    @Size(max = 20)
+//    @Column(name = "activation_key", length = 20)
+//    @JsonIgnore
+//    private String activationKey;
 
-    @Size(max = 20)
-    @Column(name = "reset_key", length = 20)
-    @JsonIgnore
-    private String resetKey;
+//    @Size(max = 20)
+//    @Column(name = "reset_key", length = 20)
+//    @JsonIgnore
+//    private String resetKey;
 
     @Column(name = "reset_date")
     private Instant resetDate = null;
@@ -164,45 +164,45 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
-    public String getResetKey() {
-        return resetKey;
-    }
-
-    public void setResetKey(String resetKey) {
-        this.resetKey = resetKey;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public String getImageUrl() {
+//        return imageUrl;
+//    }
+//
+//    public void setImageUrl(String imageUrl) {
+//        this.imageUrl = imageUrl;
+//    }
+//
+//    public boolean isActivated() {
+//        return activated;
+//    }
+//
+//    public void setActivated(boolean activated) {
+//        this.activated = activated;
+//    }
+//
+//    public String getActivationKey() {
+//        return activationKey;
+//    }
+//
+//    public void setActivationKey(String activationKey) {
+//        this.activationKey = activationKey;
+//    }
+//
+//    public String getResetKey() {
+//        return resetKey;
+//    }
+//
+//    public void setResetKey(String resetKey) {
+//        this.resetKey = resetKey;
+//    }
 
     public Instant getResetDate() {
         return resetDate;
@@ -254,13 +254,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
 		this.countryISO_Code = countryISO_Code;
 	}
 
-	public String getLangKey() {
-        return langKey;
-    }
-
-    public void setLangKey(String langKey) {
-        this.langKey = langKey;
-    }
+//	public String getLangKey() {
+//        return langKey;
+//    }
+//
+//    public void setLangKey(String langKey) {
+//        this.langKey = langKey;
+//    }
 
     public Set<Authority> getAuthorities() {
         return authorities;
@@ -302,11 +302,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated='" + activated + '\'' +
-            ", langKey='" + langKey + '\'' +
-            ", activationKey='" + activationKey + '\'' +
+//            ", email='" + email + '\'' +
+//            ", imageUrl='" + imageUrl + '\'' +
+//            ", activated='" + activated + '\'' +
+//            ", langKey='" + langKey + '\'' +
+//            ", activationKey='" + activationKey + '\'' +
             ", birthDate='" + 
             ( birthDate==null ? "null" : birthDate ) + 
             ", lastName='" + lastName + '\'' +

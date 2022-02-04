@@ -66,36 +66,36 @@ public class UserService {
             .map(
                 user -> {
                     // activate given user for the registration key.
-                    user.setActivated(true);
-                    user.setActivationKey(null);
+//                    user.setActivated(true);
+//                    user.setActivationKey(null);
                     log.debug("Activated user: {}", user);
                     return user;
                 }
             );
     }
 
-    public Optional<User> completePasswordReset(String newPassword, String key) {
-        log.debug("Reset user password for reset key {}", key);
-        return userRepository
-            .findOneByResetKey(key)
-            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
-            .map(
-                user -> {
-                    user.setPassword(passwordEncoder.encode(newPassword));
-                    user.setResetKey(null);
-                    user.setResetDate(null);
-                    return user;
-                }
-            );
-    }
+//    public Optional<User> completePasswordReset(String newPassword, String key) {
+//        log.debug("Reset user password for reset key {}", key);
+//        return userRepository
+//            .findOneByResetKey(key)
+//            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+//            .map(
+//                user -> {
+//                    user.setPassword(passwordEncoder.encode(newPassword));
+//                    user.setResetKey(null);
+//                    user.setResetDate(null);
+//                    return user;
+//                }
+//            );
+//    }
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository
             .findOneByEmailIgnoreCase(mail)
-            .filter(User::isActivated)
+//            .filter(User::isActivated)
             .map(
                 user -> {
-                    user.setResetKey(RandomUtil.generateResetKey());
+//                    user.setResetKey(RandomUtil.generateResetKey());
                     user.setResetDate(Instant.now());
                     return user;
                 }
@@ -130,16 +130,16 @@ public class UserService {
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            newUser.setEmail(userDTO.getEmail().toLowerCase());
-        }
-        newUser.setImageUrl(userDTO.getImageUrl());
-        newUser.setLangKey(userDTO.getLangKey());
+//        if (userDTO.getEmail() != null) {
+//            newUser.setEmail(userDTO.getEmail().toLowerCase());
+//        }
+//        newUser.setImageUrl(userDTO.getImageUrl());
+//        newUser.setLangKey(userDTO.getLangKey());
         newUser.setBirthDate(userDTO.getBirthDate());
         // new user is not active
-        newUser.setActivated(false);
+//        newUser.setActivated(false);
         // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
+//        newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
@@ -151,10 +151,10 @@ public class UserService {
         return newUser;
     }
 
-    private boolean removeNonActivatedUser(User existingUser) {
-        if (existingUser.isActivated()) {
-            return false;
-        }
+    private boolean removeNonActivatedUser(User existingUser) { //TO_REMOVE
+//        if (existingUser.isActivated()) {
+//            return false;
+//        }
         userRepository.delete(existingUser);
         userRepository.flush();
         return true;
@@ -168,20 +168,20 @@ public class UserService {
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            user.setEmail(userDTO.getEmail().toLowerCase());
-        }
-        user.setImageUrl(userDTO.getImageUrl());
-        if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
-        } else {
-            user.setLangKey(userDTO.getLangKey());
-        }
+//        if (userDTO.getEmail() != null) {
+//            user.setEmail(userDTO.getEmail().toLowerCase());
+//        }
+//        user.setImageUrl(userDTO.getImageUrl());
+//        if (userDTO.getLangKey() == null) {
+//            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+//        } else {
+//            user.setLangKey(userDTO.getLangKey());
+//        }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
+//        user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
-        user.setActivated(true);
+//        user.setActivated(true);
         user.setBirthDate(userDTO.getBirthDate());
         if ( userDTO.getResidenceCountryCode() == null ) {
         	user.setCountryISO_Code(Constants.DEFAULT_COUNTRY_ISO);
@@ -229,12 +229,12 @@ public class UserService {
                     user.setLogin(userDTO.getLogin().toLowerCase());
                     user.setFirstName(userDTO.getFirstName());
                     user.setLastName(userDTO.getLastName());
-                    if (userDTO.getEmail() != null) {
-                        user.setEmail(userDTO.getEmail().toLowerCase());
-                    }
-                    user.setImageUrl(userDTO.getImageUrl());
-                    user.setActivated(userDTO.isActivated());
-                    user.setLangKey(userDTO.getLangKey());
+//                    if (userDTO.getEmail() != null) {
+//                        user.setEmail(userDTO.getEmail().toLowerCase());
+//                    }
+//                    user.setImageUrl(userDTO.getImageUrl());
+//                    user.setActivated(userDTO.isActivated());
+//                    user.setLangKey(userDTO.getLangKey());
                     user.setBirthDate(userDTO.getBirthDate());
                     user.setCountryISO_Code(userDTO.getResidenceCountryCode());
                     user.setPhoneNumber(userDTO.getPhoneNumber());
@@ -287,11 +287,11 @@ public class UserService {
                 user -> {
                     user.setFirstName(firstName);
                     user.setLastName(lastName);
-                    if (email != null) {
-                        user.setEmail(email.toLowerCase());
-                    }
-                    user.setLangKey(langKey);
-                    user.setImageUrl(imageUrl);
+//                    if (email != null) {
+//                        user.setEmail(email.toLowerCase());
+//                    }
+//                    user.setLangKey(langKey);
+//                    user.setImageUrl(imageUrl);
                     user.setBirthDate(birthDate);
                     if ( residenceCountryCode != null )
                     	user.setCountryISO_Code(residenceCountryCode);

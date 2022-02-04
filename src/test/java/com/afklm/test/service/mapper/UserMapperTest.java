@@ -33,12 +33,12 @@ class UserMapperTest {
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail("johndoe@localhost");
+//        user.setActivated(true);
+//        user.setEmail("johndoe@localhost");
         user.setFirstName("john");
         user.setLastName("doe");
-        user.setImageUrl("image_url");
-        user.setLangKey("en");
+//        user.setImageUrl("image_url");
+//        user.setLangKey("en");
         
         user.setBirthDate( LocalDate.of(2004, 01, 30) );
         user.setCountryISO_Code("ATA");

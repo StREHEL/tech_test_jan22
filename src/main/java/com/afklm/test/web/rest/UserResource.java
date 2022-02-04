@@ -127,7 +127,7 @@ public class UserResource {
 //        	throw new NoFrenchUserException();
         } else { //DONE : Shift those controls to "createUser(userDTO)" service.
             User newUser = userService.createUser(userDTO);
-            mailService.sendCreationEmail(newUser);
+//            mailService.sendCreationEmail(newUser);
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
