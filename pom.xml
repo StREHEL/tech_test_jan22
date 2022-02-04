@@ -83,6 +83,7 @@
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
+        <projectlombock.version>1.18.20</projectlombock.version>
         <!-- jhipster-needle-maven-property -->
         <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
     </properties>
@@ -286,6 +287,11 @@
 			<artifactId>maven-dependency-plugin</artifactId>
 			<version>${maven-dependency-plugin.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+        	<artifactId>lombok</artifactId>
+            <version>${projectlombock.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

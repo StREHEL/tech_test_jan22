@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+//import org.projectlombok.lombok;
 
 
 /**
@@ -52,37 +53,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "last_name", length = 50)
     private String lastName;
 
-//    @Email
-//    @Size(min = 5, max = 254)
-//    @Column(length = 254, unique = true)
-//    private String email;
-
-//    @NotNull
-//    @Column(nullable = false)
-//    private boolean activated = false;
-
-//    @Size(min = 2, max = 10)
-//    @Column(name = "lang_key", length = 10)
-//    private String langKey;
-
-//    @Size(max = 256)
-//    @Column(name = "image_url", length = 256)
-//    private String imageUrl;
-
-//    @Size(max = 20)
-//    @Column(name = "activation_key", length = 20)
-//    @JsonIgnore
-//    private String activationKey;
-
-//    @Size(max = 20)
-//    @Column(name = "reset_key", length = 20)
-//    @JsonIgnore
-//    private String resetKey;
-
     @Column(name = "reset_date")
     private Instant resetDate = null;
     
     @Column(name = "birth_date")
+//    @Getter
+//    @Setter
     private LocalDate birthDate = null;
     
     
@@ -103,10 +79,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 //    @Pattern(regexp = "(F|M|U)")
     @Column(name = "gender")
     //TODO : Create a @Gender annotation in order to validate gender code inputs.
+//    @Getter
+//    @Setter
     private Character gender = null;
 
     @Column(name = "phone_number")
     @Pattern(regexp = "^(\\+33[1-9]\\.)?(\\d{1,2}\\.){3,4}(\\d{2})$", message = "The value of 'phone number' must be made with digits.")
+//    @Getter
+//    @Setter
     private String phoneNumber = null;
     
     @JsonIgnore
@@ -163,46 +143,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//
-//    public String getImageUrl() {
-//        return imageUrl;
-//    }
-//
-//    public void setImageUrl(String imageUrl) {
-//        this.imageUrl = imageUrl;
-//    }
-//
-//    public boolean isActivated() {
-//        return activated;
-//    }
-//
-//    public void setActivated(boolean activated) {
-//        this.activated = activated;
-//    }
-//
-//    public String getActivationKey() {
-//        return activationKey;
-//    }
-//
-//    public void setActivationKey(String activationKey) {
-//        this.activationKey = activationKey;
-//    }
-//
-//    public String getResetKey() {
-//        return resetKey;
-//    }
-//
-//    public void setResetKey(String resetKey) {
-//        this.resetKey = resetKey;
-//    }
 
     public Instant getResetDate() {
         return resetDate;
