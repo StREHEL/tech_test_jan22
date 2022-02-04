@@ -18,7 +18,7 @@ import com.afklm.test.repository.UserRepository;
 import com.afklm.test.security.AuthoritiesConstants;
 import com.afklm.test.service.UserService;
 import com.afklm.test.service.dto.AdminUserDTO;
-import com.afklm.test.service.dto.PasswordChangeDTO;
+//import com.afklm.test.service.dto.PasswordChangeDTO;
 import com.afklm.test.service.dto.UserDTO;
 import com.afklm.test.web.rest.vm.KeyAndPasswordVM;
 import com.afklm.test.web.rest.vm.ManagedUserVM;
@@ -670,129 +670,129 @@ class AccountResourceIT {
     }
 
 //    @Test
-    @Transactional
-    @WithMockUser("change-password-wrong-existing-password")
-    void testChangePasswordWrongExistingPassword() throws Exception {
-        User user = new User();
-        String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-wrong-existing-password");
-        user.setEmail("change-password-wrong-existing-password@example.com");
-        userRepository.saveAndFlush(user);
-
-        restAccountMockMvc
-            .perform(
-                post("/api/account/change-password")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password")))
-                    .with(csrf())
-            )
-            .andExpect(status().isBadRequest());
-
-        User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
-        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isFalse();
-        assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPassword())).isTrue();
-    }
-
-//    @Test
-    @Transactional
-    @WithMockUser("change-password")
-    void testChangePassword() throws Exception {
-        User user = new User();
-        String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password");
-        user.setEmail("change-password@example.com");
-        userRepository.saveAndFlush(user);
-
-        restAccountMockMvc
-            .perform(
-                post("/api/account/change-password")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "new password")))
-                    .with(csrf())
-            )
-            .andExpect(status().isOk());
-
-        User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
-        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
-    }
+//    @Transactional
+//    @WithMockUser("change-password-wrong-existing-password")
+//    void testChangePasswordWrongExistingPassword() throws Exception { //TO_REMOVE.
+//        User user = new User();
+//        String currentPassword = RandomStringUtils.random(60);
+//        user.setPassword(passwordEncoder.encode(currentPassword));
+//        user.setLogin("change-password-wrong-existing-password");
+//        user.setEmail("change-password-wrong-existing-password@example.com");
+//        userRepository.saveAndFlush(user);
+//
+//        restAccountMockMvc
+//            .perform(
+//                post("/api/account/change-password")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO("1" + currentPassword, "new password")))
+//                    .with(csrf())
+//            )
+//            .andExpect(status().isBadRequest());
+//
+//        User updatedUser = userRepository.findOneByLogin("change-password-wrong-existing-password").orElse(null);
+//        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isFalse();
+//        assertThat(passwordEncoder.matches(currentPassword, updatedUser.getPassword())).isTrue();
+//    }
 
 //    @Test
-    @Transactional
-    @WithMockUser("change-password-too-small")
-    void testChangePasswordTooSmall() throws Exception {
-        User user = new User();
-        String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-too-small");
-        user.setEmail("change-password-too-small@example.com");
-        userRepository.saveAndFlush(user);
-
-        String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MIN_LENGTH - 1);
-
-        restAccountMockMvc
-            .perform(
-                post("/api/account/change-password")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
-                    .with(csrf())
-            )
-            .andExpect(status().isBadRequest());
-
-        User updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-    }
+//    @Transactional
+//    @WithMockUser("change-password")
+//    void testChangePassword() throws Exception { //TO_REMOVE.
+//        User user = new User();
+//        String currentPassword = RandomStringUtils.random(60);
+//        user.setPassword(passwordEncoder.encode(currentPassword));
+//        user.setLogin("change-password");
+//        user.setEmail("change-password@example.com");
+//        userRepository.saveAndFlush(user);
+//
+//        restAccountMockMvc
+//            .perform(
+//                post("/api/account/change-password")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "new password")))
+//                    .with(csrf())
+//            )
+//            .andExpect(status().isOk());
+//
+//        User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
+//        assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
+//    }
 
 //    @Test
-    @Transactional
-    @WithMockUser("change-password-too-long")
-    void testChangePasswordTooLong() throws Exception {
-        User user = new User();
-        String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-too-long");
-        user.setEmail("change-password-too-long@example.com");
-        userRepository.saveAndFlush(user);
-
-        String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MAX_LENGTH + 1);
-
-        restAccountMockMvc
-            .perform(
-                post("/api/account/change-password")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
-                    .with(csrf())
-            )
-            .andExpect(status().isBadRequest());
-
-        User updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-    }
+//    @Transactional
+//    @WithMockUser("change-password-too-small")
+//    void testChangePasswordTooSmall() throws Exception { //TO_REMOVE.
+//        User user = new User();
+//        String currentPassword = RandomStringUtils.random(60);
+//        user.setPassword(passwordEncoder.encode(currentPassword));
+//        user.setLogin("change-password-too-small");
+//        user.setEmail("change-password-too-small@example.com");
+//        userRepository.saveAndFlush(user);
+//
+//        String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MIN_LENGTH - 1);
+//
+//        restAccountMockMvc
+//            .perform(
+//                post("/api/account/change-password")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
+//                    .with(csrf())
+//            )
+//            .andExpect(status().isBadRequest());
+//
+//        User updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
+//        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+//    }
 
 //    @Test
-    @Transactional
-    @WithMockUser("change-password-empty")
-    void testChangePasswordEmpty() throws Exception {
-        User user = new User();
-        String currentPassword = RandomStringUtils.random(60);
-        user.setPassword(passwordEncoder.encode(currentPassword));
-        user.setLogin("change-password-empty");
-        user.setEmail("change-password-empty@example.com");
-        userRepository.saveAndFlush(user);
+//    @Transactional
+//    @WithMockUser("change-password-too-long")
+//    void testChangePasswordTooLong() throws Exception { //TO_REMOVE.
+//        User user = new User();
+//        String currentPassword = RandomStringUtils.random(60);
+//        user.setPassword(passwordEncoder.encode(currentPassword));
+//        user.setLogin("change-password-too-long");
+//        user.setEmail("change-password-too-long@example.com");
+//        userRepository.saveAndFlush(user);
+//
+//        String newPassword = RandomStringUtils.random(ManagedUserVM.PASSWORD_MAX_LENGTH + 1);
+//
+//        restAccountMockMvc
+//            .perform(
+//                post("/api/account/change-password")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, newPassword)))
+//                    .with(csrf())
+//            )
+//            .andExpect(status().isBadRequest());
+//
+//        User updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
+//        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+//    }
 
-        restAccountMockMvc
-            .perform(
-                post("/api/account/change-password")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "")))
-                    .with(csrf())
-            )
-            .andExpect(status().isBadRequest());
-
-        User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
-        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-    }
+//    @Test
+//    @Transactional
+//    @WithMockUser("change-password-empty")
+//    void testChangePasswordEmpty() throws Exception { //TO_REMOVE.
+//        User user = new User();
+//        String currentPassword = RandomStringUtils.random(60);
+//        user.setPassword(passwordEncoder.encode(currentPassword));
+//        user.setLogin("change-password-empty");
+//        user.setEmail("change-password-empty@example.com");
+//        userRepository.saveAndFlush(user);
+//
+//        restAccountMockMvc
+//            .perform(
+//                post("/api/account/change-password")
+//                    .contentType(MediaType.APPLICATION_JSON)
+//                    .content(TestUtil.convertObjectToJsonBytes(new PasswordChangeDTO(currentPassword, "")))
+//                    .with(csrf())
+//            )
+//            .andExpect(status().isBadRequest());
+//
+//        User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
+//        assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+//    }
 
 //    @Test
     @Transactional

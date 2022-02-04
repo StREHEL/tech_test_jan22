@@ -3,6 +3,7 @@ package com.afklm.test.service.dto;
 /**
  * A DTO representing a password change required data - current and new password.
  */
+@Deprecated
 public class PasswordChangeDTO {
 
     private String currentPassword;

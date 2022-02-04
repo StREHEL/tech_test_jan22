@@ -8,7 +8,7 @@ import com.afklm.test.security.SecurityUtils;
 import com.afklm.test.service.MailService;
 import com.afklm.test.service.UserService;
 import com.afklm.test.service.dto.AdminUserDTO;
-import com.afklm.test.service.dto.PasswordChangeDTO;
+//import com.afklm.test.service.dto.PasswordChangeDTO;
 import com.afklm.test.service.dto.UserDTO;
 import com.afklm.test.web.rest.errors.*;
 import com.afklm.test.web.rest.vm.KeyAndPasswordVM;
@@ -151,19 +151,19 @@ public class AccountResource {
         );
     }
 
-    /**
-     * {@code POST  /account/change-password} : changes the current user's password.
-     *
-     * @param passwordChangeDto current and new password.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
-     */
-    @PostMapping(path = "/account/change-password")
-    public void changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
-        if (isPasswordLengthInvalid(passwordChangeDto.getNewPassword())) {
-            throw new InvalidPasswordException();
-        }
-        userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
-    }
+//    /**
+//     * {@code POST  /account/change-password} : changes the current user's password.
+//     *
+//     * @param passwordChangeDto current and new password.
+//     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
+//     */
+//    @PostMapping(path = "/account/change-password")
+//    public void changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) { //TO_REMOVE
+//        if (isPasswordLengthInvalid(passwordChangeDto.getNewPassword())) {
+//            throw new InvalidPasswordException();
+//        }
+//        userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+//    }
 
     /**
      * {@code GET  /account/sessions} : get the current open sessions.
