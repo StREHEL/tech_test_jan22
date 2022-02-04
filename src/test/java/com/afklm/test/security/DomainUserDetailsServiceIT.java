@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import com.afklm.test.IntegrationTest;
 import com.afklm.test.domain.User;
 import com.afklm.test.repository.UserRepository;
+
+import java.time.LocalDate;
 import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +30,10 @@ class DomainUserDetailsServiceIT {
     private static final String USER_TWO_EMAIL = "test-user-two@localhost";
     private static final String USER_THREE_LOGIN = "test-user-three";
     private static final String USER_THREE_EMAIL = "test-user-three@localhost";
-
+    
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(2003, 12, 23);
+    private static final String DEFAULT_RESIDENCE = "FRA";
+    
     @Autowired
     private UserRepository userRepository;
 
@@ -45,6 +50,8 @@ class DomainUserDetailsServiceIT {
         userOne.setFirstName("userOne");
         userOne.setLastName("doe");
         userOne.setLangKey("en");
+        userOne.setBirthDate(DEFAULT_BIRTHDATE);
+        userOne.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.save(userOne);
 
         User userTwo = new User();
@@ -55,6 +62,8 @@ class DomainUserDetailsServiceIT {
         userTwo.setFirstName("userTwo");
         userTwo.setLastName("doe");
         userTwo.setLangKey("en");
+        userTwo.setBirthDate(DEFAULT_BIRTHDATE);
+        userTwo.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.save(userTwo);
 
         User userThree = new User();
@@ -65,6 +74,8 @@ class DomainUserDetailsServiceIT {
         userThree.setFirstName("userThree");
         userThree.setLastName("doe");
         userThree.setLangKey("en");
+        userThree.setBirthDate(DEFAULT_BIRTHDATE);
+        userThree.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.save(userThree);
     }
 

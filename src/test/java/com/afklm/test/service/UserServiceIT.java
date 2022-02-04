@@ -1,6 +1,8 @@
 package com.afklm.test.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+//import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.afklm.test.IntegrationTest;
@@ -10,9 +12,12 @@ import com.afklm.test.domain.User;
 import com.afklm.test.repository.PersistentTokenRepository;
 import com.afklm.test.repository.UserRepository;
 import com.afklm.test.service.dto.AdminUserDTO;
+import com.afklm.test.service.errors.NotAdultUserException;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +51,10 @@ class UserServiceIT {
     private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
 
     private static final String DEFAULT_LANGKEY = "dummy";
+    
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(2003, 12, 23);
+    
+    private static final String DEFAULT_RESIDENCE = "FRA";
 
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
@@ -76,6 +85,8 @@ class UserServiceIT {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setBirthDate(DEFAULT_BIRTHDATE);
+        user.setCountryISO_Code(DEFAULT_RESIDENCE);
 
         when(dateTimeProvider.getNow()).thenReturn(Optional.of(LocalDateTime.now()));
         auditingHandler.setDateTimeProvider(dateTimeProvider);
@@ -212,5 +223,24 @@ class UserServiceIT {
         token.setIpAddress("127.0.0.1");
         token.setUserAgent("Test agent");
         persistentTokenRepository.saveAndFlush(token);
+    }
+    
+    /**
+     * Attempting to create a non adult user must throw a specific exception.
+     * -A_CONSERVER-
+     */
+    @Test
+    @Transactional
+    void assertThatCreateUserWhosIsNotAdultThrowsException() {
+        Instant seventeenYearsAgo = Instant.now().minus(17L, ChronoUnit.HOURS);
+        LocalDate seventeenYearsBeforeDate = seventeenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        user.setActivated(true);
+        user.setBirthDate(seventeenYearsBeforeDate);
+        
+        AdminUserDTO userDTO = new AdminUserDTO(user);
+        assertThrows( NotAdultUserException.class, () -> {
+        	userService.createUser(userDTO);
+        });
     }
 }

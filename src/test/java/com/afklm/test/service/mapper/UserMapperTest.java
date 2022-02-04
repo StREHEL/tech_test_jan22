@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.afklm.test.domain.User;
 import com.afklm.test.service.dto.AdminUserDTO;
 import com.afklm.test.service.dto.UserDTO;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -37,6 +39,9 @@ class UserMapperTest {
         user.setLastName("doe");
         user.setImageUrl("image_url");
         user.setLangKey("en");
+        
+        user.setBirthDate( LocalDate.of(2004, 01, 30) );
+        user.setCountryISO_Code("ATA");
 
         userDto = new AdminUserDTO(user);
     }

@@ -10,8 +10,8 @@ import com.afklm.test.security.AuthoritiesConstants;
 import com.afklm.test.security.SecurityUtils;
 import com.afklm.test.service.dto.AdminUserDTO;
 import com.afklm.test.service.dto.UserDTO;
-import com.afklm.test.web.rest.errors.NoFrenchUserException;
-import com.afklm.test.web.rest.errors.NotAdultUserException;
+import com.afklm.test.service.errors.NoFrenchUserException;
+import com.afklm.test.service.errors.NotAdultUserException;
 
 import java.time.Instant;
 import java.time.LocalDate;

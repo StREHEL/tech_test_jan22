@@ -100,7 +100,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
      * M <-> Male
      * U <-> No gender
      */
-    /*@NotNull(message = "Gender is required, valid values are : F: female, M: male, U: no gender.")*/
 //    @Pattern(regexp = "(F|M|U)")
     @Column(name = "gender")
     //TODO : Create a @Gender annotation in order to validate gender code inputs.

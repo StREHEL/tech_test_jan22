@@ -7,11 +7,11 @@ import com.afklm.test.security.AuthoritiesConstants;
 import com.afklm.test.service.MailService;
 import com.afklm.test.service.UserService;
 import com.afklm.test.service.dto.AdminUserDTO;
+import com.afklm.test.service.errors.NoFrenchUserException;
+import com.afklm.test.service.errors.NotAdultUserException;
 import com.afklm.test.web.rest.errors.BadRequestAlertException;
 import com.afklm.test.web.rest.errors.EmailAlreadyUsedException;
 import com.afklm.test.web.rest.errors.LoginAlreadyUsedException;
-import com.afklm.test.web.rest.errors.NoFrenchUserException;
-import com.afklm.test.web.rest.errors.NotAdultUserException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -108,14 +108,9 @@ public class UserResource {
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<User> createUser(@Valid @RequestBody AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
-        /*Instant eightteenYearsAgo_v0 = Instant.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
         Instant eightteenYearsAgo = ZonedDateTime.now().minusYears(Constants.ADULT_AGE_YEARS).toInstant();
-        /*LocalDate eightteenYearsBeforeDate = eightteenYearsAgo.atZone(ZoneId.systemDefault()).toLocalDate();*/
-
         /*DateTimeFormatter isoLocalDateFormatter = DateTimeFormatter.ISO_LOCAL_DATE;*/
-        /*LocalDate userBirthDate = userDTO.getBirthDate();*/
-        
-//        /*Instant eightteenYearsBeforeTodayInst = Instant.now().minus(6574, ChronoUnit.DAYS);*/
+        /*LocalDate userBirthDate = userDTO.getBirthDate();*/        
         /*LocalDate eightteenYearsBeforeTodayLocDate = LocalDate.now().minus(Constants.ADULT_AGE_YEARS, ChronoUnit.YEARS);*/
         /*java.util.Date eightteenYearsBeforeTodayDate = Date.from(eightteenYearsBeforeTodayLocDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());*/
         
@@ -130,7 +125,7 @@ public class UserResource {
 //        	throw new NotAdultUserException();
 //        } else if ( userDTO.getResidenceCountryCode()==null || Constants.FRANCE_ISO_CODES.contains(userDTO.getResidenceCountryCode())==false ) {
 //        	throw new NoFrenchUserException();
-        } else { //TODO : Shift those controls to "createUser(userDTO)" service.
+        } else { //DONE : Shift those controls to "createUser(userDTO)" service.
             User newUser = userService.createUser(userDTO);
             mailService.sendCreationEmail(newUser);
             return ResponseEntity

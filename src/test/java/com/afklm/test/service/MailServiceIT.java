@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,6 +57,11 @@ class MailServiceIT {
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
 
+    
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(2003, 12, 23);
+    
+    private static final String DEFAULT_RESIDENCE = "FRA";
+    
     @Autowired
     private JHipsterProperties jHipsterProperties;
 

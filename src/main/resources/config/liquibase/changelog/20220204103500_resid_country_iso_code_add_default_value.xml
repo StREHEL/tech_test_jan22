@@ -6,13 +6,13 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet author="a104284" id="00000000000005">
-    	<comment>Add residence country code to user table (ISO 3166-1 alpha-2 or ISO 3166-1 alpha-3 codes).</comment>
-        <addColumn schemaName = "public" tableName="jhi_user">
-            <column name="resid_country_iso_code" type="java.sql.Types.VARCHAR(3)" defaultValue="FR">
-				<constraints  nullable="false" />
-			</column>
-        </addColumn>
-            <!-- <column name="resid_country_iso_code" type="java.sql.Types.VARCHAR(3)" defaultValue="ATA"> -->
+	<changeSet author="a104284" id="00000000000009">
+    	<comment>Specify 'resid_country_iso_code' default value to 'FR'.</comment>
+        <addDefaultValue schemaName = "public" 
+        	tableName="jhi_user" 
+            columnName="resid_country_iso_code" 
+            columnDataType="java.sql.Types.VARCHAR(3)" 
+            defaultValue="FR" 
+            defaultValueComputed="now" />
     </changeSet>
 </databaseChangeLog>
