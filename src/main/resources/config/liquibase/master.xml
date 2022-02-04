@@ -25,4 +25,5 @@
    	<include file="config/liquibase/changelog/20220204091300_makes_gender_col_nullable_for_user.xml" relativeToChangelogFile="false"/>
    	<!-- <include file="config/liquibase/changelog/20220204102700_resid_country_iso_code_drop_default_value.xml" relativeToChangelogFile="false"/> -->
    	<!-- <include file="config/liquibase/changelog/20220204103500_resid_country_iso_code_add_default_value.xml" relativeToChangelogFile="false"/> -->
+   	<include file="config/liquibase/changelog/20220204114300_user_authority_table_drop_foreign_key_contraints.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

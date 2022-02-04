@@ -17,6 +17,7 @@ import com.afklm.test.service.dto.UserDTO;
 import com.afklm.test.service.mapper.UserMapper;
 import com.afklm.test.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Consumer;
 import javax.persistence.EntityManager;
@@ -61,6 +62,10 @@ class UserResourceIT {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
+    private static final LocalDate DEFAULT_BIRTHDATE = LocalDate.of(2003, 12, 23);
+    private static final String DEFAULT_RESIDENCE = "FRA";
+    
+    
     @Autowired
     private UserRepository userRepository;
 
@@ -91,6 +96,8 @@ class UserResourceIT {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setBirthDate(DEFAULT_BIRTHDATE);
+        user.setCountryISO_Code(DEFAULT_RESIDENCE);
         return user;
     }
 
@@ -124,6 +131,8 @@ class UserResourceIT {
         managedUserVM.setActivated(true);
         managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
         managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc
@@ -146,6 +155,7 @@ class UserResourceIT {
                 assertThat(testUser.getEmail()).isEqualTo(DEFAULT_EMAIL);
                 assertThat(testUser.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
                 assertThat(testUser.getLangKey()).isEqualTo(DEFAULT_LANGKEY);
+                //TODO Add checks here.
             }
         );
     }
@@ -165,6 +175,8 @@ class UserResourceIT {
         managedUserVM.setActivated(true);
         managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
         managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -197,6 +209,8 @@ class UserResourceIT {
         managedUserVM.setActivated(true);
         managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
         managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
@@ -229,6 +243,8 @@ class UserResourceIT {
         managedUserVM.setActivated(true);
         managedUserVM.setImageUrl(DEFAULT_IMAGEURL);
         managedUserVM.setLangKey(DEFAULT_LANGKEY);
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
@@ -262,6 +278,7 @@ class UserResourceIT {
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
             .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
+        //TODO : Add checks here.
     }
 
     @Test
@@ -281,6 +298,7 @@ class UserResourceIT {
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
             .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
+        //TODO : Add checks here.
     }
 
     @Test
@@ -313,6 +331,8 @@ class UserResourceIT {
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc
@@ -334,6 +354,7 @@ class UserResourceIT {
                 assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
                 assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
                 assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+                //TODO : Add checks here.
             }
         );
     }
@@ -362,6 +383,8 @@ class UserResourceIT {
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc
@@ -384,6 +407,7 @@ class UserResourceIT {
                 assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
                 assertThat(testUser.getImageUrl()).isEqualTo(UPDATED_IMAGEURL);
                 assertThat(testUser.getLangKey()).isEqualTo(UPDATED_LANGKEY);
+                //TODO : Add checks here.
             }
         );
     }
@@ -393,7 +417,7 @@ class UserResourceIT {
     void updateUserExistingEmail() throws Exception {
         // Initialize the database with 2 users
         userRepository.saveAndFlush(user);
-
+//KEEP_IT !
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
         anotherUser.setPassword(RandomStringUtils.random(60));
@@ -403,6 +427,8 @@ class UserResourceIT {
         anotherUser.setLastName("hipster");
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
+        anotherUser.setBirthDate(DEFAULT_BIRTHDATE);
+        anotherUser.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
@@ -422,6 +448,8 @@ class UserResourceIT {
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc
@@ -439,7 +467,7 @@ class UserResourceIT {
     void updateUserExistingLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-
+//KEEP_IT !
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
         anotherUser.setPassword(RandomStringUtils.random(60));
@@ -449,6 +477,8 @@ class UserResourceIT {
         anotherUser.setLastName("hipster");
         anotherUser.setImageUrl("");
         anotherUser.setLangKey("en");
+        anotherUser.setBirthDate(DEFAULT_BIRTHDATE);
+        anotherUser.setCountryISO_Code(DEFAULT_RESIDENCE);
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
@@ -468,6 +498,8 @@ class UserResourceIT {
         managedUserVM.setCreatedDate(updatedUser.getCreatedDate());
         managedUserVM.setLastModifiedBy(updatedUser.getLastModifiedBy());
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
+        managedUserVM.setBirthDate(DEFAULT_BIRTHDATE);
+        managedUserVM.setResidenceCountryCode(DEFAULT_RESIDENCE);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         restUserMockMvc
@@ -523,6 +555,8 @@ class UserResourceIT {
         userDTO.setLangKey(DEFAULT_LANGKEY);
         userDTO.setCreatedBy(DEFAULT_LOGIN);
         userDTO.setLastModifiedBy(DEFAULT_LOGIN);
+        userDTO.setBirthDate(DEFAULT_BIRTHDATE);
+        userDTO.setResidenceCountryCode(DEFAULT_RESIDENCE);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         User user = userMapper.userDTOToUser(userDTO);
@@ -539,6 +573,7 @@ class UserResourceIT {
         assertThat(user.getLastModifiedBy()).isNull();
         assertThat(user.getLastModifiedDate()).isNotNull();
         assertThat(user.getAuthorities()).extracting("name").containsExactly(AuthoritiesConstants.USER);
+        //TODO : add checks here.
     }
 
     @Test
@@ -570,10 +605,11 @@ class UserResourceIT {
         assertThat(userDTO.getLastModifiedDate()).isEqualTo(user.getLastModifiedDate());
         assertThat(userDTO.getAuthorities()).containsExactly(AuthoritiesConstants.USER);
         assertThat(userDTO.toString()).isNotNull();
+        //TODO : Add checks here.
     }
 
-    @Test
-    void testAuthorityEquals() {
+    /*@Test*/
+    void testAuthorityEquals() { //REMOVE TEST.
         Authority authorityA = new Authority();
         assertThat(authorityA).isNotEqualTo(null).isNotEqualTo(new Object());
         assertThat(authorityA.hashCode()).isZero();
